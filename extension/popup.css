@@ -1,0 +1,157 @@
+* {
+    box-sizing: border-box;
+}
+
+body {
+    width: 320px;
+    background-color: #0A0A0A;
+    color: #e6edf3;
+    padding: 1.25rem;
+    font-family: 'Inter', system-ui, sans-serif;
+    border: 1px solid rgba(255,255,255,0.08);
+    margin: 0;
+}
+
+.text-center { text-align: center; }
+.py-6 { padding: 1.5rem 0; }
+.mb-1 { margin-bottom: 0.25rem; }
+.mb-2 { margin-bottom: 0.5rem; }
+.mb-4 { margin-bottom: 1rem; }
+.mb-6 { margin-bottom: 1.5rem; }
+.mt-2 { margin-top: 0.5rem; }
+.mt-4 { margin-top: 1rem; }
+
+.logo-img {
+    height: 48px;
+    width: auto;
+    object-fit: contain;
+    margin: 0 auto;
+    display: block;
+}
+
+.title-gradient {
+    font-size: 1.25rem;
+    font-weight: 600;
+    color: #fff;
+}
+
+.text-slate-200 { color: #e2e8f0; }
+.text-slate-300 { color: #cbd5e1; }
+.text-slate-400 { color: rgba(255,255,255,0.5); }
+.text-slate-500 { color: rgba(255,255,255,0.4); }
+.text-white { color: #ffffff; }
+.text-red-400 { color: #f87171; }
+.text-teal-400 { color: #4ADE80; }
+.text-green-400 { color: #4ade80; }
+
+.text-xs { font-size: 0.75rem; }
+.text-sm { font-size: 0.875rem; }
+.text-lg { font-size: 1.125rem; font-weight: 600; color: #fff; }
+.font-bold { font-weight: bold; }
+.font-medium { font-weight: 500; }
+
+.btn {
+    width: 100%;
+    font-weight: 500;
+    padding: 0.6rem 1.5rem;
+    border-radius: 0.5rem;
+    cursor: pointer;
+    transition: all 0.2s ease-in-out;
+    border: none;
+    font-size: 0.95rem;
+}
+
+.btn-primary {
+    background-color: #238636;
+    color: white;
+}
+.btn-primary:hover { background-color: #2ea043; }
+.btn-primary:disabled { opacity: 0.7; cursor: not-allowed; }
+
+.btn-success {
+    background-color: rgba(74,222,128,0.1);
+    color: #4ADE80;
+}
+.btn-success:hover { background-color: rgba(74,222,128,0.15); }
+
+.btn-secondary {
+    background-color: transparent;
+    color: rgba(255,255,255,0.6);
+    border: 1px solid rgba(255,255,255,0.1);
+    font-size: 0.85rem;
+    padding: 0.5rem 1rem;
+}
+.btn-secondary:hover { background-color: rgba(255,255,255,0.05); color: #fff; border-color: rgba(255,255,255,0.2); }
+
+.input-group label {
+    display: block;
+    font-size: 0.75rem;
+    font-weight: 500;
+    color: rgba(255,255,255,0.6);
+    margin-bottom: 0.4rem;
+}
+.input-control {
+    width: 100%;
+    background-color: #111111;
+    border: 1px solid rgba(255,255,255,0.1);
+    border-radius: 0.5rem;
+    padding: 0.6rem 0.75rem;
+    font-size: 0.875rem;
+    color: white;
+    outline: none;
+    transition: all 0.2s;
+}
+select.input-control {
+    appearance: none;
+    -webkit-appearance: none;
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12' fill='rgba(255,255,255,0.5)' viewBox='0 0 16 16'%3E%3Cpath d='M8 11L3 6h10z'/%3E%3C/svg%3E");
+    background-repeat: no-repeat;
+    background-position: right 0.75rem center;
+    padding-right: 2rem;
+    cursor: pointer;
+}
+select.input-control option {
+    background-color: #111111;
+    color: white;
+}
+.input-control:focus { border-color: #4ADE80; background-color: #161616; }
+
+.error-box {
+    padding: 0.5rem;
+    font-size: 0.875rem;
+    background-color: rgba(248, 113, 113, 0.1);
+    border: 1px solid rgba(248, 113, 113, 0.2);
+    border-radius: 0.375rem;
+    color: #f87171;
+}
+
+.flex-row { display: flex; align-items: center; gap: 0.5rem; margin-bottom: 1rem; }
+
+.tag {
+    font-size: 10px;
+    text-transform: uppercase;
+    font-weight: 600;
+    padding: 0.125rem 0.5rem;
+    border-radius: 0.375rem;
+}
+.tag-easy { background-color: rgba(74, 222, 128, 0.1); color: #4ade80; border: 1px solid rgba(74,222,128,0.2); }
+.tag-medium { background-color: rgba(250, 204, 21, 0.1); color: #facc15; border: 1px solid rgba(250,204,21,0.2); }
+.tag-hard { background-color: rgba(248, 113, 113, 0.1); color: #f87171; border: 1px solid rgba(248,113,113,0.2); }
+.tag-default { background-color: rgba(255,255,255,0.05); color: rgba(255,255,255,0.7); border: 1px solid rgba(255,255,255,0.1); }
+
+.line-clamp {
+    overflow: hidden;
+    display: -webkit-box;
+    -webkit-box-orient: vertical;
+    -webkit-line-clamp: 1;
+    line-clamp: 1;
+}
+
+@keyframes pulse {
+    0%, 100% { opacity: 1; }
+    50% { opacity: 0.5; }
+}
+.animate-pulse { animation: pulse 2s cubic-bezier(0.4, 0, 0.6, 1) infinite; letter-spacing: 0.025em; }
+
+.hidden { display: none; }
+.block { display: block; }
