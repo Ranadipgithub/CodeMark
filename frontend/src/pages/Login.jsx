@@ -37,15 +37,17 @@ const Login = () => {
         </Link>
       </div>
 
-      <div className="flex-1 flex items-center justify-center px-4 pb-16">
+      <div className="flex-1 flex items-center justify-center px-4 pb-16 max-h-screen">
         <div className="w-full max-w-[400px] animate-fade-in">
           {/* Logo */}
-          <div className="flex items-center justify-center gap-2.5 mb-8">
-            <div className="w-10 h-10 rounded-xl bg-gradient-to-br from-emerald-500 to-teal-600 flex items-center justify-center shadow-lg shadow-emerald-500/20">
+          <div className="flex items-center justify-center gap-2.5 ">
+            {/* <div className="w-10 h-10 rounded-xl bg-gradient-to-br from-emerald-500 to-teal-600 flex items-center justify-center shadow-lg shadow-emerald-500/20">
               <Code2 size={20} className="text-white" />
             </div>
-            <span className="text-xl font-bold gradient-text-primary">LeetCode Clipper</span>
+            <span className="text-xl font-bold gradient-text-primary">CodeMark</span> */}
+            <img src="logo.png" className="logo-img h-32" alt="CodeMark Logo" />
           </div>
+          
 
           {/* Card */}
           <div className="glass-card p-8">

@@ -12,7 +12,7 @@ const app = express();
 // CORS Configuration
 const allowedOrigins = [
   'http://localhost:5173',
-  'https://codemark-lac.vercel.app/' // Frontend
+  'https://codemark-lac.vercel.app'
 ];
 
 app.use(cors({
