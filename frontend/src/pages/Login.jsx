@@ -38,7 +38,7 @@ const Login = () => {
       </div>
 
       <div className="flex-1 flex items-center justify-center px-4 pb-16 max-h-screen">
-        <div className="w-full max-w-[400px] animate-fade-in">
+        <div className="w-full max-w-100 animate-fade-in">
           {/* Logo */}
           <div className="flex items-center justify-center gap-2.5 ">
             {/* <div className="w-10 h-10 rounded-xl bg-gradient-to-br from-emerald-500 to-teal-600 flex items-center justify-center shadow-lg shadow-emerald-500/20">

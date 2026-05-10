@@ -1,7 +1,7 @@
 document.addEventListener('DOMContentLoaded', async () => {
   const container = document.getElementById('app-container');
-  const BACKEND_URL = 'http://localhost:5000';
-  const DASHBOARD_URL = 'http://localhost:5173';
+  const BACKEND_URL = 'https://codemark.onrender.com';
+  const DASHBOARD_URL = 'https://codemark-lac.vercel.app';
 
   // 1. Check for Auth Cookie
   const cookie = await new Promise(resolve => {
