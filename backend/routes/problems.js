@@ -40,10 +40,24 @@ router.post('/', protect, async (req, res) => {
   }
 });
 
+// Get all problems
 router.get('/', protect, async (req, res) => {
   try {
     const problems = await Problem.find({ userId: req.user._id }).sort({ createdAt: -1 });
     res.json(problems);
+  } catch (error) {
+    res.status(500).json({ message: error.message });
+  }
+});
+
+// Check if a problem is already saved by slug
+router.get('/check/:slug', protect, async (req, res) => {
+  try {
+    const problem = await Problem.findOne({ userId: req.user._id, slug: req.params.slug });
+    if (problem) {
+      return res.json({ saved: true, problem });
+    }
+    res.json({ saved: false });
   } catch (error) {
     res.status(500).json({ message: error.message });
   }

@@ -5,7 +5,12 @@ document.addEventListener('DOMContentLoaded', async () => {
 
   // 1. Check for Auth Cookie
   const cookie = await new Promise(resolve => {
-    chrome.cookies.get({ url: BACKEND_URL, name: 'token' }, (c) => resolve(c));
+    chrome.cookies.get({ url: BACKEND_URL, name: 'token' }, (c) => {
+      if (chrome.runtime.lastError) {
+        console.warn("Cookie check error:", chrome.runtime.lastError.message);
+      }
+      resolve(c);
+    });
   });
 
   if (!cookie) {
@@ -60,29 +65,22 @@ document.addEventListener('DOMContentLoaded', async () => {
         Extracting Problem...
       </div>`;
 
-    // 3. Fetch GraphQL Data via Background Script
-    const query = `
-      query questionData($titleSlug: String!) {
-        question(titleSlug: $titleSlug) {
-          questionId
-          title
-          titleSlug
-          difficulty
-          topicTags {
-            name
+    // 3. Fetch GraphQL Data via Background Script AND Check Backend
+    Promise.all([
+      new Promise((resolve) => {
+        chrome.runtime.sendMessage({
+          action: 'fetchGraphQL',
+          payload: {
+            operationName: 'questionData',
+            variables: { titleSlug: slug },
+            query: query
           }
-        }
-      }
-    `;
-
-    chrome.runtime.sendMessage({
-      action: 'fetchGraphQL',
-      payload: {
-        operationName: 'questionData',
-        variables: { titleSlug: slug },
-        query: query
-      }
-    }, (response) => {
+        }, resolve);
+      }),
+      fetch(`${BACKEND_URL}/api/problems/check/${slug}`, { credentials: 'include' })
+        .then(res => res.json())
+        .catch(() => ({ saved: false }))
+    ]).then(([response, checkResponse]) => {
       if (!response.success || !response.data || !response.data.data.question) {
         container.innerHTML = `<p class="error-box">Failed to fetch data from LeetCode. Make sure you are on a valid problem page.</p>`;
         return;
@@ -91,11 +89,11 @@ document.addEventListener('DOMContentLoaded', async () => {
       const q = response.data.data.question;
       const tags = q.topicTags.map(t => t.name);
 
-      renderSaveUI(q.title, slug, url, q.difficulty, tags);
+      renderSaveUI(q.title, slug, url, q.difficulty, tags, checkResponse?.saved || false);
     });
   });
 
-  function renderSaveUI(title, slug, url, difficulty, tags) {
+  function renderSaveUI(title, slug, url, difficulty, tags, isSaved = false) {
     container.innerHTML = `
       <div>
         <div class="text-center mb-4"><img src="logo.png" class="logo-img" alt="CodeMark Logo" /></div>
@@ -109,36 +107,46 @@ document.addEventListener('DOMContentLoaded', async () => {
           <span class="text-xs text-slate-400">${tags.length} topics</span>
         </div>
 
-        <div class="input-group mb-2">
-          <label>Initial Feeling (Seeds your next review)</label>
-          <select id="feeling-select" class="input-control">
-            <option value="Medium">Medium (Review in 2 days)</option>
-            <option value="Easy">Easy (Review in 3 days)</option>
-            <option value="Hard">Hard (Review tomorrow)</option>
-          </select>
-        </div>
+        ${isSaved ? `
+          <div class="text-center p-4 my-4 bg-emerald-500/10 border border-emerald-500/20 rounded-xl">
+            <p class="text-emerald-400 font-medium mb-1">✅ Already Saved</p>
+            <p class="text-slate-400 text-xs">You have already added this problem to your dashboard.</p>
+          </div>
+          <button id="dash-btn-2" class="btn btn-secondary mb-2" style="width: 100%;">
+            Open Dashboard
+          </button>
+        ` : `
+          <div class="input-group mb-2 mt-4">
+            <label>Initial Feeling (Seeds your next review)</label>
+            <select id="feeling-select" class="input-control">
+              <option value="Medium">Medium (Review in 2 days)</option>
+              <option value="Easy">Easy (Review in 3 days)</option>
+              <option value="Hard">Hard (Review tomorrow)</option>
+            </select>
+          </div>
 
-        <div class="input-group mb-2">
-          <label>Select Topic</label>
-          <select id="topic-select" class="input-control">
-            <option value="">-- Auto-categorize by tags --</option>
-            ${tags.map(t => `<option value="${t}">${t}</option>`).join('')}
-          </select>
-        </div>
+          <div class="input-group mb-2">
+            <label>Select Topic</label>
+            <select id="topic-select" class="input-control">
+              <option value="">-- Auto-categorize by tags --</option>
+              ${tags.map(t => `<option value="${t}">${t}</option>`).join('')}
+            </select>
+          </div>
 
-        <div class="input-group mb-4">
-          <label>Or add custom topics (comma separated)</label>
-          <input type="text" id="custom-topics" placeholder="e.g. Must Revise, DP, Tricky" 
-            class="input-control" />
-        </div>
+          <div class="input-group mb-4">
+            <label>Or add custom topics (comma separated)</label>
+            <input type="text" id="custom-topics" placeholder="e.g. Must Revise, DP, Tricky" 
+              class="input-control" />
+          </div>
 
-        <button id="save-btn" class="btn btn-primary mb-2">
-          Save Problem
-        </button>
-        <button id="dash-btn-2" class="btn btn-secondary mb-2">
-          Open Dashboard
-        </button>
-        <div id="status-msg" class="mt-2 text-center text-xs hidden"></div>
+          <button id="save-btn" class="btn btn-primary mb-2">
+            Save Problem
+          </button>
+          <button id="dash-btn-2" class="btn btn-secondary mb-2">
+            Open Dashboard
+          </button>
+          <div id="status-msg" class="mt-2 text-center text-xs hidden"></div>
+        `}
       </div>
     `;
 
@@ -146,7 +154,8 @@ document.addEventListener('DOMContentLoaded', async () => {
       chrome.tabs.create({ url: DASHBOARD_URL });
     });
 
-    document.getElementById('save-btn').addEventListener('click', async () => {
+    if (!isSaved) {
+      document.getElementById('save-btn').addEventListener('click', async () => {
       const btn = document.getElementById('save-btn');
       const msg = document.getElementById('status-msg');
       const selectedTopic = document.getElementById('topic-select').value;
@@ -203,5 +212,6 @@ document.addEventListener('DOMContentLoaded', async () => {
         btn.className = 'btn btn-primary mb-2';
       }
     });
+    }
   }
 });

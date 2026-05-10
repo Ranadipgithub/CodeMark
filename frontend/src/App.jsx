@@ -13,13 +13,23 @@ const PrivateRoute = ({ children }) => {
   return user ? children : <Navigate to="/login" />;
 };
 
+const GuestRoute = ({ children }) => {
+  const { user, loading } = useContext(AuthContext);
+  if (loading) return <div className="h-screen w-full flex items-center justify-center text-white bg-background">Loading...</div>;
+  return user ? <Navigate to="/dashboard" /> : children;
+};
+
 function App() {
   return (
     <AuthProvider>
       <Router>
         <Routes>
           <Route path="/" element={<HomePage />} />
-          <Route path="/login" element={<Login />} />
+          <Route path="/login" element={
+            <GuestRoute>
+              <Login />
+            </GuestRoute>
+          } />
           <Route path="/dashboard" element={
             <PrivateRoute>
               <Dashboard />

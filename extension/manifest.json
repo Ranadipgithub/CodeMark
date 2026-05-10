@@ -11,6 +11,7 @@
   ],
   "host_permissions": [
     "http://localhost:5000/*",
+    "https://codemark.onrender.com/*",
     "https://leetcode.com/graphql"
   ],
   "icons": {
