@@ -33,6 +33,9 @@ app.use(cookieParser());
 // Routes
 app.use('/api/auth', authRoutes);
 app.use('/api/problems', problemRoutes);
+app.get('/', (req, res) => {
+  res.send('CodeMark Backend is running');
+})
 
 const PORT = process.env.PORT || 5000;
 
