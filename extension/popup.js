@@ -127,9 +127,8 @@ document.addEventListener('DOMContentLoaded', async () => {
       <div>
         <div class="text-center mb-4"><img src="logo.png" class="logo-img" /></div>
         <h2 class="text-lg text-white mb-1 line-clamp">${title}</h2>
-        <div class="flex-row mb-4">
+        <div class="flex-row mb-2">
           <span class="tag tag-${difficulty.toLowerCase()}">${difficulty}</span>
-          <span class="text-xs text-slate-400">${tags.length} topics</span>
         </div>
 
         ${isDue ? `
@@ -144,7 +143,7 @@ document.addEventListener('DOMContentLoaded', async () => {
         ` : isSaved ? `
           <div class="text-center p-4 my-4 bg-emerald-500/10 border border-emerald-500/20 rounded-xl">
             <p class="text-emerald-400 font-medium mb-1">✅ Already Saved</p>
-            <p class="text-slate-400 text-xs">Next review: ${new Date(status.nextReviewDate).toLocaleDateString()}</p>
+            <p class="text-slate-400 text-xs">Next review: ${new Date(status.problem.nextReviewDate).toLocaleDateString()}</p>
           </div>
         ` : `
           <div class="input-group mb-2 mt-4">
@@ -157,11 +156,11 @@ document.addEventListener('DOMContentLoaded', async () => {
           </div>
 
           <div class="input-group mb-2">
-            <label>Select Primary Topic</label>
-            <select id="topic-select" class="input-control">
-              <option value="">-- Auto-categorize by tags --</option>
-              ${tags.map(t => `<option value="${t}">${t}</option>`).join('')}
-            </select>
+            <label>Select Topics</label>
+            <div id="topics-container" class="topics-container">
+              ${tags.map(t => `<div class="topic-chip" data-topic="${t}">${t}</div>`).join('')}
+            </div>
+            ${tags.length === 0 ? '<p class="text-xs text-slate-500">No LeetCode topics found.</p>' : ''}
           </div>
 
           <div class="input-group mb-4">
@@ -181,19 +180,31 @@ document.addEventListener('DOMContentLoaded', async () => {
     });
 
     if (!isSaved && !isDue) {
+      // Add toggle functionality to chips
+      document.querySelectorAll('.topic-chip').forEach(chip => {
+        chip.addEventListener('click', () => {
+          chip.classList.toggle('selected');
+        });
+      });
+
       document.getElementById('save-btn').addEventListener('click', async () => {
         const btn = document.getElementById('save-btn');
-        const selectedTopic = document.getElementById('topic-select').value;
+        const selectedChips = Array.from(document.querySelectorAll('.topic-chip.selected')).map(chip => chip.getAttribute('data-topic'));
         const customTopicsStr = document.getElementById('custom-topics').value;
         const manualTopics = customTopicsStr.split(',').map(t => t.trim()).filter(t => t !== '');
 
-        // Re-implementing your logic: Custom Input > Dropdown > All Tags
-        let finalTopics;
+        // Gather all selected topics
+        let finalTopics = [];
+        if (selectedChips.length > 0) {
+          finalTopics = [...selectedChips];
+        }
+        
         if (manualTopics.length > 0) {
-          finalTopics = manualTopics;
-        } else if (selectedTopic) {
-          finalTopics = [selectedTopic];
-        } else {
+          finalTopics = [...finalTopics, ...manualTopics];
+        }
+
+        // Fallback: if no topics selected and no custom topics, use all problem tags
+        if (finalTopics.length === 0 && tags.length > 0) {
           finalTopics = [...tags];
         }
 
@@ -207,8 +218,8 @@ document.addEventListener('DOMContentLoaded', async () => {
             credentials: 'include',
             body: JSON.stringify({
               title, slug, leetcodeUrl: url, difficulty,
-              leetcodeTags: tags,
-              customTopics: finalTopics,
+              leetcodeTags: finalTopics,
+              customTopics: [],
               initialFeeling: document.getElementById('feeling-select').value
             })
           });

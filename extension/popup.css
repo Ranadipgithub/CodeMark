@@ -155,3 +155,33 @@ select.input-control option {
 
 .hidden { display: none; }
 .block { display: block; }
+
+.topics-container {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.35rem;
+    margin-bottom: 0.5rem;
+}
+
+.topic-chip {
+    font-size: 0.7rem;
+    padding: 0.25rem 0.5rem;
+    border-radius: 1rem;
+    background-color: rgba(255,255,255,0.05);
+    color: rgba(255,255,255,0.6);
+    border: 1px solid rgba(255,255,255,0.1);
+    cursor: pointer;
+    transition: all 0.2s;
+    user-select: none;
+}
+
+.topic-chip:hover {
+    background-color: rgba(255,255,255,0.1);
+    color: rgba(255,255,255,0.8);
+}
+
+.topic-chip.selected {
+    background-color: rgba(74, 222, 128, 0.15);
+    color: #4ade80;
+    border-color: rgba(74, 222, 128, 0.3);
+}

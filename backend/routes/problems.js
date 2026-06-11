@@ -55,9 +55,12 @@ router.get('/check/:slug', protect, async (req, res) => {
   try {
     const problem = await Problem.findOne({ userId: req.user._id, slug: req.params.slug });
     if (problem) {
-      return res.json({ saved: true, problem });
+      const endOfToday = new Date();
+      endOfToday.setHours(23, 59, 59, 999);
+      const isDue = problem.nextReviewDate && problem.nextReviewDate <= endOfToday;
+      return res.json({ saved: true, problem, isDue, problemId: problem._id });
     }
-    res.json({ saved: false });
+    res.json({ saved: false, isDue: false });
   } catch (error) {
     res.status(500).json({ message: error.message });
   }
@@ -111,9 +114,12 @@ router.delete('/:id', protect, async (req, res) => {
 // Get Daily Queue
 router.get('/daily-queue', protect, async (req, res) => {
   try {
+    const endOfToday = new Date();
+    endOfToday.setHours(23, 59, 59, 999);
+
     const problems = await Problem.find({ 
       userId: req.user._id,
-      nextReviewDate: { $lte: new Date() }
+      nextReviewDate: { $lte: endOfToday }
     })
     .sort({ difficultyScore: -1, nextReviewDate: 1 })
     .limit(10);
