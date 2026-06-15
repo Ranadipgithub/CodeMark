@@ -3,7 +3,7 @@ import { useContext } from "react";
 import { AuthContext } from "../context/AuthContext";
 import Navbar from "../components/Navbar";
 import { ArrowRight, Download, BookOpen, Zap } from "lucide-react";
-
+ 
 const HomePage = () => {
   const { user } = useContext(AuthContext);
 
