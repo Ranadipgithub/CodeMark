@@ -31,7 +31,22 @@ document.addEventListener('DOMContentLoaded', async () => {
     return;
   }
 
-  // 3. Check Context
+  let isAuthenticated = false;
+  try {
+    const authCheck = await sendMessageToBackground({action: "verifyAuth"});
+    if(authCheck.ok){
+      isAuthenticated = true;
+    }
+  } catch (err){
+    console.error("auth error", err)
+  }
+  
+  if(!isAuthenticated){
+    renderLoginUI();
+    return;
+  }
+
+  // 3. Check Context 
   chrome.tabs.query({ active: true, currentWindow: true }, async (tabs) => {
     const currentTab = tabs[0];
     const url = currentTab.url;

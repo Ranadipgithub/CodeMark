@@ -104,6 +104,17 @@ const HomePage = () => {
                 Add to Chrome
                 <ArrowRight size={16} className="transition-transform group-hover:translate-x-1" />
               </a>
+              <a
+                href="https://microsoftedge.microsoft.com/addons/detail/bpdaabgkofganngihjdemekgdkknkhdf"
+                target="_blank"
+                rel="noopener noreferrer"
+                id="cta-add-to-edge"
+                className="group inline-flex items-center gap-3 px-7 py-3.5 bg-gradient-to-r from-cyan-500 to-blue-500 text-white font-semibold rounded-xl hover:from-cyan-400 hover:to-blue-400 transition-all duration-300 shadow-2xl shadow-cyan-500/25 hover:shadow-cyan-500/40 hover:-translate-y-0.5"
+              >
+                <Download size={20} />
+                Add to Edge
+                <ArrowRight size={16} className="transition-transform group-hover:translate-x-1" />
+              </a>
               {user ? (
                 <Link
                   to="/dashboard"
@@ -190,15 +201,28 @@ const HomePage = () => {
               <p className="text-white/40 text-sm sm:text-base mb-8 max-w-[420px] mx-auto">
                 Join thousands of developers who use CodeMark to organize and master their coding interview prep.
               </p>
-              <a
-                href="#"
-                id="cta-bottom-chrome"
-                className="group inline-flex items-center gap-3 px-7 py-3.5 bg-gradient-to-r from-emerald-500 to-teal-500 text-white font-semibold rounded-xl hover:from-emerald-400 hover:to-teal-400 transition-all duration-300 shadow-2xl shadow-emerald-500/25 hover:shadow-emerald-500/40"
-              >
-                <Download size={18} />
-                Get Started — It's Free
-                <ArrowRight size={16} className="transition-transform group-hover:translate-x-1" />
-              </a>
+              <div className="flex flex-col sm:flex-row items-center justify-center gap-4">
+                <a
+                  href="#"
+                  id="cta-bottom-chrome"
+                  className="group inline-flex items-center gap-3 px-7 py-3.5 bg-gradient-to-r from-emerald-500 to-teal-500 text-white font-semibold rounded-xl hover:from-emerald-400 hover:to-teal-400 transition-all duration-300 shadow-2xl shadow-emerald-500/25 hover:shadow-emerald-500/40"
+                >
+                  <Download size={18} />
+                  Add to Chrome
+                  <ArrowRight size={16} className="transition-transform group-hover:translate-x-1" />
+                </a>
+                <a
+                  href="https://microsoftedge.microsoft.com/addons/detail/bpdaabgkofganngihjdemekgdkknkhdf"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  id="cta-bottom-edge"
+                  className="group inline-flex items-center gap-3 px-7 py-3.5 bg-gradient-to-r from-cyan-500 to-blue-500 text-white font-semibold rounded-xl hover:from-cyan-400 hover:to-blue-400 transition-all duration-300 shadow-2xl shadow-cyan-500/25 hover:shadow-cyan-500/40"
+                >
+                  <Download size={18} />
+                  Add to Edge
+                  <ArrowRight size={16} className="transition-transform group-hover:translate-x-1" />
+                </a>
+              </div>
             </div>
           </div>
         </div>
