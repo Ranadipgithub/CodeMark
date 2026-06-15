@@ -1,45 +1,11 @@
-import { Link } from 'react-router-dom';
-import { useContext } from 'react';
-import { AuthContext } from '../context/AuthContext';
-import Navbar from '../components/Navbar';
-import {
-  ArrowRight, Download, BookOpen, Zap, BarChart3,
-  Bookmark, Target, Layers
-} from 'lucide-react';
+import { Link } from "react-router-dom";
+import { useContext } from "react";
+import { AuthContext } from "../context/AuthContext";
+import Navbar from "../components/Navbar";
+import { ArrowRight, Download, BookOpen, Zap } from "lucide-react";
 
 const HomePage = () => {
   const { user } = useContext(AuthContext);
-
-  const features = [
-    {
-      icon: <Bookmark size={24} />,
-      title: 'One-Click Save',
-      description: 'Save any LeetCode problem instantly from your browser with our Chrome extension.',
-      color: 'from-emerald-500 to-teal-500',
-      shadowColor: 'shadow-emerald-500/20',
-    },
-    {
-      icon: <Layers size={24} />,
-      title: 'Smart Organization',
-      description: 'Auto-categorize problems by topic tags — Arrays, DP, Graphs and more.',
-      color: 'from-blue-500 to-indigo-500',
-      shadowColor: 'shadow-blue-500/20',
-    },
-    {
-      icon: <Target size={24} />,
-      title: 'Revision Tracking',
-      description: 'Track solved status and build a revision queue for consistent practice.',
-      color: 'from-violet-500 to-purple-500',
-      shadowColor: 'shadow-violet-500/20',
-    },
-    {
-      icon: <BarChart3 size={24} />,
-      title: 'Progress Insights',
-      description: 'Visualize your progress across difficulties and topics at a glance.',
-      color: 'from-amber-500 to-orange-500',
-      shadowColor: 'shadow-amber-500/20',
-    },
-  ];
 
   return (
     <div className="min-h-screen bg-background">
@@ -57,11 +23,11 @@ const HomePage = () => {
           style={{
             backgroundImage: `linear-gradient(rgba(255,255,255,0.1) 1px, transparent 1px),
                              linear-gradient(90deg, rgba(255,255,255,0.1) 1px, transparent 1px)`,
-            backgroundSize: '60px 60px'
+            backgroundSize: "60px 60px",
           }}
         />
 
-        <div className="relative max-w-[1280px] mx-auto px-6 pt-24 pb-32 md:pt-32 md:pb-40">
+        <div className="relative max-w-7xl mx-auto px-6 pt-24 pb-32 md:pt-32 md:pb-40">
           <div className="flex flex-col items-center text-center">
             {/* Badge */}
             {/* <div className="animate-fade-in mb-8">
@@ -74,7 +40,7 @@ const HomePage = () => {
             {/* Heading */}
             <h1
               className="text-4xl sm:text-5xl md:text-6xl lg:text-7xl font-black tracking-tight leading-[1.1] mb-6 animate-fade-in"
-              style={{ animationDelay: '100ms' }}
+              style={{ animationDelay: "100ms" }}
             >
               <span className="text-white">Save, Organize &</span>
               <br />
@@ -83,8 +49,8 @@ const HomePage = () => {
 
             {/* Subtitle */}
             <p
-              className="text-base sm:text-lg text-white/50 max-w-[560px] leading-relaxed mb-10 animate-fade-in"
-              style={{ animationDelay: '200ms' }}
+              className="text-base sm:text-lg text-white/50 max-w-140 leading-relaxed mb-10 animate-fade-in"
+              style={{ animationDelay: "200ms" }}
             >
               Clip problems in one click, auto-organize by topic, and build a
               personalized revision system to ace your coding interviews.
@@ -93,33 +59,27 @@ const HomePage = () => {
             {/* CTAs */}
             <div
               className="flex flex-col sm:flex-row items-center gap-4 animate-fade-in"
-              style={{ animationDelay: '300ms' }}
+              style={{ animationDelay: "300ms" }}
             >
-              <a
-                href="#"
-                id="cta-add-to-chrome"
-                className="group inline-flex items-center gap-3 px-7 py-3.5 bg-gradient-to-r from-emerald-500 to-teal-500 text-white font-semibold rounded-xl hover:from-emerald-400 hover:to-teal-400 transition-all duration-300 shadow-2xl shadow-emerald-500/25 hover:shadow-emerald-500/40 hover:-translate-y-0.5"
-              >
-                <Download size={20} />
-                Add to Chrome
-                <ArrowRight size={16} className="transition-transform group-hover:translate-x-1" />
-              </a>
               <a
                 href="https://microsoftedge.microsoft.com/addons/detail/bpdaabgkofganngihjdemekgdkknkhdf"
                 target="_blank"
                 rel="noopener noreferrer"
                 id="cta-add-to-edge"
-                className="group inline-flex items-center gap-3 px-7 py-3.5 bg-gradient-to-r from-cyan-500 to-blue-500 text-white font-semibold rounded-xl hover:from-cyan-400 hover:to-blue-400 transition-all duration-300 shadow-2xl shadow-cyan-500/25 hover:shadow-cyan-500/40 hover:-translate-y-0.5"
+                className="group inline-flex items-center gap-3 px-7 py-3.5 bg-linear-to-r from-emerald-500 to-teal-500 text-white font-semibold rounded-xl hover:from-emerald-400 hover:to-teal-400 transition-all duration-300 shadow-2xl shadow-emerald-500/25 hover:shadow-emerald-500/40 hover:-translate-y-0.5"
               >
                 <Download size={20} />
                 Add to Edge
-                <ArrowRight size={16} className="transition-transform group-hover:translate-x-1" />
+                <ArrowRight
+                  size={16}
+                  className="transition-transform group-hover:translate-x-1"
+                />
               </a>
               {user ? (
                 <Link
                   to="/dashboard"
                   id="cta-dashboard"
-                  className="inline-flex items-center gap-2 px-7 py-3.5 text-white/70 font-medium rounded-xl border border-white/10 hover:border-white/20 hover:bg-white/[0.04] hover:text-white transition-all duration-200"
+                  className="inline-flex items-center gap-2 px-7 py-3.5 text-white/70 font-medium rounded-xl border border-white/10 hover:border-white/20 hover:bg-white/4 hover:text-white transition-all duration-200"
                 >
                   <BookOpen size={18} />
                   Open Dashboard
@@ -128,7 +88,7 @@ const HomePage = () => {
                 <Link
                   to="/login"
                   id="cta-sign-in"
-                  className="inline-flex items-center gap-2 px-7 py-3.5 text-white/70 font-medium rounded-xl border border-white/10 hover:border-white/20 hover:bg-white/[0.04] hover:text-white transition-all duration-200"
+                  className="inline-flex items-center gap-2 px-7 py-3.5 text-white/70 font-medium rounded-xl border border-white/10 hover:border-white/20 hover:bg-white/4 hover:text-white transition-all duration-200"
                 >
                   Sign In to Dashboard
                 </Link>
@@ -189,55 +149,66 @@ const HomePage = () => {
 
       {/* CTA Banner */}
       <section className="relative py-20" id="cta-section">
-        <div className="max-w-[800px] mx-auto px-6 text-center">
+        <div className="max-w-200 mx-auto px-6 text-center">
           <div className="glass-card p-10 sm:p-14 relative overflow-hidden">
             {/* Background glow */}
-            <div className="absolute inset-0 bg-gradient-to-br from-emerald-500/5 via-transparent to-teal-500/5" />
+            <div className="absolute inset-0 bg-linear-to-br from-emerald-500/5 via-transparent to-teal-500/5" />
             <div className="relative">
-              <Zap size={36} className="text-emerald-400 mx-auto mb-5 animate-float" />
+              <Zap
+                size={36}
+                className="text-emerald-400 mx-auto mb-5 animate-float"
+              />
               <h3 className="text-2xl sm:text-3xl font-bold text-white mb-4">
                 Ready to supercharge your prep?
               </h3>
-              <p className="text-white/40 text-sm sm:text-base mb-8 max-w-[420px] mx-auto">
-                Join thousands of developers who use CodeMark to organize and master their coding interview prep.
+              <p className="text-white/40 text-sm sm:text-base mb-8 max-w-105 mx-auto">
+                Join thousands of developers who use CodeMark to organize and
+                master their coding interview prep.
               </p>
-              <div className="flex flex-col sm:flex-row items-center justify-center gap-4">
-                <a
-                  href="#"
-                  id="cta-bottom-chrome"
-                  className="group inline-flex items-center gap-3 px-7 py-3.5 bg-gradient-to-r from-emerald-500 to-teal-500 text-white font-semibold rounded-xl hover:from-emerald-400 hover:to-teal-400 transition-all duration-300 shadow-2xl shadow-emerald-500/25 hover:shadow-emerald-500/40"
-                >
-                  <Download size={18} />
-                  Add to Chrome
-                  <ArrowRight size={16} className="transition-transform group-hover:translate-x-1" />
-                </a>
-                <a
-                  href="https://microsoftedge.microsoft.com/addons/detail/bpdaabgkofganngihjdemekgdkknkhdf"
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  id="cta-bottom-edge"
-                  className="group inline-flex items-center gap-3 px-7 py-3.5 bg-gradient-to-r from-cyan-500 to-blue-500 text-white font-semibold rounded-xl hover:from-cyan-400 hover:to-blue-400 transition-all duration-300 shadow-2xl shadow-cyan-500/25 hover:shadow-cyan-500/40"
-                >
-                  <Download size={18} />
-                  Add to Edge
-                  <ArrowRight size={16} className="transition-transform group-hover:translate-x-1" />
-                </a>
-              </div>
+              <a
+                href="https://microsoftedge.microsoft.com/addons/detail/bpdaabgkofganngihjdemekgdkknkhdf"
+                target="_blank"
+                rel="noopener noreferrer"
+                id="cta-bottom-edge"
+                className="group inline-flex items-center gap-3 px-7 py-3.5 bg-linear-to-r from-emerald-500 to-teal-500 text-white font-semibold rounded-xl hover:from-emerald-400 hover:to-teal-400 transition-all duration-300 shadow-2xl shadow-emerald-500/25 hover:shadow-emerald-500/40"
+              >
+                <Download size={18} />
+                Add to Edge
+                <ArrowRight
+                  size={16}
+                  className="transition-transform group-hover:translate-x-1"
+                />
+              </a>
             </div>
           </div>
         </div>
       </section>
 
       {/* Footer */}
-      <footer className="border-t border-white/[0.06] py-8">
-        <div className="max-w-[1000px] mx-auto px-6 flex flex-col sm:flex-row items-center justify-between gap-4">
+      <footer className="border-t border-white/6 py-8">
+        <div className="max-w-250 mx-auto px-6 flex flex-col sm:flex-row items-center justify-between gap-4">
           <span className="text-xs text-white/25">
             © {new Date().getFullYear()} CodeMark. Built for learners.
           </span>
           <div className="flex items-center gap-6">
-            <a href="#" className="text-xs text-white/25 hover:text-white/50 transition-colors">Privacy</a>
-            <a href="#" className="text-xs text-white/25 hover:text-white/50 transition-colors">Terms</a>
-            <a href="#" className="text-xs text-white/25 hover:text-white/50 transition-colors">GitHub</a>
+            <a
+              href="#"
+              className="text-xs text-white/25 hover:text-white/50 transition-colors"
+            >
+              Privacy
+            </a>
+            <a
+              href="#"
+              className="text-xs text-white/25 hover:text-white/50 transition-colors"
+            >
+              Terms
+            </a>
+            <a
+              href="#"
+              className="text-xs text-white/25 hover:text-white/50 transition-colors"
+            >
+              GitHub
+            </a>
           </div>
         </div>
       </footer>
